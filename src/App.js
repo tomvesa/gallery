@@ -1,23 +1,68 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import config from './components/config';
+
+
+
+
+// App components
+import SearchForm from './components/SearchForm';
+import MainNav from './components/MainNav';
+import PhotoContainer from './components/PhotoContainer';
+import { Routes , Route } from 'react-router-dom';
+
+
+
+
+
+
+
 
 function App() {
+
+  const randomIndex = () =>  Math.floor(Math.random() * searchDefault.length);  
+  let { 
+    baseUrl, 
+    apiKey, 
+    perPage, 
+    outputFormat,
+    searchDefault,
+                 } = config;
+
+    const [photos, setPhotos] = useState([]);
+    const [searchValue, setSearchValue] = useState(searchDefault[randomIndex()]);
+    
+    const handleSearchValue = ( data ) => {
+              setSearchValue( data );
+              //console.log({searchValue})
+    }
+
+  //  call Flickr for photos and pass the photos arra to search value
+    useEffect(() => {
+              fetch(`${baseUrl}&api_key=${apiKey}&tags=${searchValue}&per_page=${perPage}&page=&format=${outputFormat}&nojsoncallback=1`)
+              .then(response => response.json())
+              .then(json =>     {
+                                //console.log("JSON:", json);
+                                setPhotos( json.photos.photo)
+                                //console.log(`searching for: ${searchValue}`);
+                              })
+              .catch(error => console.log("error Fetching data ", error));
+          },[searchValue]);  //fetch only when searchValue has changed
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='container'>
+
+    {/* page elements */}
+      <SearchForm  onData={handleSearchValue}  />
+      <MainNav     onData={handleSearchValue}  />      
+      
+
+      <Routes>
+        <Route path="/" element={<PhotoContainer photos={ photos }/>}/>
+        <Route path="/:topic"  element={<PhotoContainer photos={ photos }/>} />
+        <Route path="/search/:topic" element={<PhotoContainer photos={ photos }/>} />
+
+      </Routes>
     </div>
   );
 }
