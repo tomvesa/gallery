@@ -1,6 +1,6 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+
 
 const MainNav = ({ onData }) => {
 
@@ -10,9 +10,11 @@ const MainNav = ({ onData }) => {
         onData(topic); 
         navigate(`/search/${topic}`)
   }
-
+  
    return (
+
     <nav className="main-nav">
+     
     <ul>
       <li><NavLink to='cats'      onClick={ e => { handleButtonSearch("cats")}}>Cats</NavLink></li>
       <li><NavLink to='dogs'      onClick={ e => { handleButtonSearch("dogs")}}>Dogs</NavLink></li>

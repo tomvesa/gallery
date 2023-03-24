@@ -43,7 +43,7 @@ function App() {
               .then(json =>     {
                                 //console.log("JSON:", json);
                                 setPhotos( json.photos.photo)
-                                //console.log(`searching for: ${searchValue}`);
+                                console.log(`searching for: ${searchValue}`);
                               })
               .catch(error => console.log("error Fetching data ", error));
           },[searchValue]);  //fetch only when searchValue has changed
@@ -51,7 +51,7 @@ function App() {
 
   return (
     <div className='container'>
-
+ 
     {/* page elements */}
       <SearchForm  onData={handleSearchValue}  />
       <MainNav     onData={handleSearchValue}  />      
