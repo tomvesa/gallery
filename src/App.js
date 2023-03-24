@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import config from './components/config';
+import configQueryParams from './components/configQueryParams';
 
 
 
@@ -20,13 +21,13 @@ import { Routes , Route } from 'react-router-dom';
 function App() {
 
   const randomIndex = (arr) =>  Math.floor(Math.random() * arr.length);  
-  let { 
-    baseUrl, 
-    apiKey, 
-    perPage, 
-    outputFormat
-                 } = config;
-    const searchDefault = ["cats", "dogs", "computers"];
+  const { apiKey } = config 
+  const { baseUrl,
+          perPage, 
+          outputFormat,
+          searchDefault
+                        } = configQueryParams;
+
     const [photos, setPhotos] = useState([]);
     const [searchValue, setSearchValue] = useState(searchDefault[randomIndex(searchDefault)]);
     
