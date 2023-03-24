@@ -19,17 +19,16 @@ import { Routes , Route } from 'react-router-dom';
 
 function App() {
 
-  const randomIndex = () =>  Math.floor(Math.random() * searchDefault.length);  
+  const randomIndex = (arr) =>  Math.floor(Math.random() * arr.length);  
   let { 
     baseUrl, 
     apiKey, 
     perPage, 
-    outputFormat,
-    searchDefault,
+    outputFormat
                  } = config;
-
+    const searchDefault = ["cats", "dogs", "computers"];
     const [photos, setPhotos] = useState([]);
-    const [searchValue, setSearchValue] = useState(searchDefault[randomIndex()]);
+    const [searchValue, setSearchValue] = useState(searchDefault[randomIndex(searchDefault)]);
     
     const handleSearchValue = ( data ) => {
               setSearchValue( data );
