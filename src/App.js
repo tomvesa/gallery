@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import config from './components/config';
 import configQueryParams from './components/configQueryParams';
-
+import { Routes , Route, useLocation, Navigate } from 'react-router-dom';
 
 
 
@@ -9,62 +8,71 @@ import configQueryParams from './components/configQueryParams';
 import SearchForm from './components/SearchForm';
 import MainNav from './components/MainNav';
 import PhotoContainer from './components/PhotoContainer';
-import { Routes , Route } from 'react-router-dom';
-
-
-
-
+import NotFound from './components/NotFound';
 
 
 
 
 function App() {
-
-  const randomIndex = (arr) =>  Math.floor(Math.random() * arr.length);  
-  const { apiKey } = config 
-  const { baseUrl,
-          perPage, 
-          outputFormat,
-          searchDefault
-                        } = configQueryParams;
-
-    const [photos, setPhotos] = useState([]);
+  
+    const randomIndex = (arr) =>  Math.floor(Math.random() * arr.length); 
+    const { searchDefault } = configQueryParams;
     const [searchValue, setSearchValue] = useState(searchDefault[randomIndex(searchDefault)]);
     
     const handleSearchValue = ( data ) => {
               setSearchValue( data );
-              //console.log({searchValue})
+              console.log({searchValue})
     }
 
-  //  call Flickr for photos and pass the photos arra to search value
-    useEffect(() => {
-              fetch(`${baseUrl}&api_key=${apiKey}&tags=${searchValue}&per_page=${perPage}&page=&format=${outputFormat}&nojsoncallback=1`)
-              .then(response => response.json())
-              .then(json =>     {
-                                //console.log("JSON:", json);
-                                setPhotos( json.photos.photo)
-                                console.log(`searching for: ${searchValue}`);
-                              })
-              .catch(error => console.log("error Fetching data ", error));
-          },[searchValue]);  //fetch only when searchValue has changed
-
-
-  return (
-    <div className='container'>
- 
-    {/* page elements */}
-      <SearchForm  onData={handleSearchValue}  />
-      <MainNav     onData={handleSearchValue}  />      
+    const location = useLocation();
+    let locationSearch = location.search; 
+  useEffect(()=>{      
+    if(location.pathname === '/search/'){      
+        setSearchValue(location.search.substring(1));
+    }
+      },[locationSearch])
       
+    
+    
+  //  call Flickr for photos and pass the photos arra to search value
 
-      <Routes>
-        <Route path="/" element={<PhotoContainer photos={ photos }/>}/>
-        <Route path="/:topic"  element={<PhotoContainer photos={ photos }/>} />
-        <Route path="/search/:topic" element={<PhotoContainer photos={ photos }/>} />
 
+//handle 404 page  
+  if(location.pathname === "/404"){
+      return(
+        <Routes>
+        <Route path="/404" element={<NotFound />}  />
       </Routes>
-    </div>
-  );
+    )
+  } else {
+
+      return (
+        <div className='container'>
+    
+        {/* page elements */}
+          <MainNav     onData={handleSearchValue}  />   
+          <SearchForm   onData={handleSearchValue} />
+            
+          
+
+          <Routes>
+            <Route path="/" element={<PhotoContainer search={ searchValue }/>}>
+              <Route path="dogs"  element={<PhotoContainer search={ "dogs" }/>} />
+              <Route path="cats"  element={<PhotoContainer search={ "cats" }/>} />
+              <Route path="computers"  element={<PhotoContainer search={ "computers" }/>} />
+            </Route>
+            <Route path="search" element={<PhotoContainer search={ searchValue }/>} >
+              <Route index element={<PhotoContainer search={ searchValue }/>} />
+              <Route path="?:topic" element={<PhotoContainer search={ searchValue }/>} />
+            </Route>
+
+            {/* 404 page not found  Route*/}
+            <Route path="/*"   element={<Navigate replace   to="/404"/>}  />
+
+          </Routes>
+        </div>
+      );
+}
 }
 
 export default App;

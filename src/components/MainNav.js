@@ -8,7 +8,7 @@ const MainNav = ({ onData }) => {
 
   const handleButtonSearch = (topic)=>{
         onData(topic); 
-        navigate(`/search/${topic}`)
+        navigate(`${topic}`)
   }
   
    return (

@@ -4,7 +4,7 @@ const configQueryParams = {
     page: 5,
     outputFormat : "json",
     baseUrl: "https://www.flickr.com/services/rest/?method=flickr.photos.search",
-    searchDefault : ["cats", "dogs", "computers"]
+    searchDefault : ["sunset", "sand dunes", "desert"]
     };
 
 
