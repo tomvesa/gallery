@@ -56,7 +56,8 @@ function App() {
           
 
           <Routes>
-            <Route path="/" element={<PhotoContainer search={ searchValue }/>}>
+            <Route path="/" > 
+              <Route index  element={<Navigate replace   to={"search/?" + searchDefault[randomIndex(searchDefault)]}/>} />
               <Route path="dogs"  element={<PhotoContainer search={ "dogs" }/>} />
               <Route path="cats"  element={<PhotoContainer search={ "cats" }/>} />
               <Route path="computers"  element={<PhotoContainer search={ "computers" }/>} />

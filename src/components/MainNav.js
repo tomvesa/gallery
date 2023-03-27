@@ -1,24 +1,17 @@
 import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 
-const MainNav = ({ onData }) => {
-
-  const navigate = useNavigate();
-
-  const handleButtonSearch = (topic)=>{
-        onData(topic); 
-        navigate(`${topic}`)
-  }
+const MainNav = () => {
   
    return (
 
     <nav className="main-nav">
      
     <ul>
-      <li><NavLink to='cats'      onClick={ e => { handleButtonSearch("cats")}}>Cats</NavLink></li>
-      <li><NavLink to='dogs'      onClick={ e => { handleButtonSearch("dogs")}}>Dogs</NavLink></li>
-      <li><NavLink to='computers' onClick={ e => { handleButtonSearch("computers")}}>Computers</NavLink></li>
+      <li><NavLink to='cats'      >Cats</NavLink></li>
+      <li><NavLink to='dogs'      >Dogs</NavLink></li>
+      <li><NavLink to='computers' >Computers</NavLink></li>
     </ul>
   </nav>
    )
