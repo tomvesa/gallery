@@ -2,7 +2,7 @@ import React from "react";
 import PhotoItem from "./PhotoItem";
 import { useState, useEffect } from "react";
 
-import config from './config';
+import apiKey  from './config';
 import configQueryParams from './configQueryParams';
 
 
@@ -13,12 +13,12 @@ const PhotoContainer = ( {search} ) => {
 console.log(search);
     const [photos, setPhotos] = useState([]);
     const [loading, setLoading] = useState(true);
-    const { apiKey } = config 
+    //const { apiKey } = config; 
     const { baseUrl,
             perPage, 
             outputFormat
                           } = configQueryParams;
-    
+    console.log(apiKey);
 // fetch photos based on the query params and search from the user interaction                          
     useEffect(() => {
         setLoading(true);
