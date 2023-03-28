@@ -51,7 +51,8 @@ const location = useLocation();
 
           <Routes>
             <Route path="/" > 
-              <Route index  element={<Navigate replace   to={"search/?" + searchDefault[randomIndex(searchDefault)]}/>} />
+              <Route index  element={<Navigate replace   to={"home/" }/>} />
+              <Route path="home"  element={<PhotoContainer search={ searchDefault[randomIndex(searchDefault)] }/>} />
               <Route path="dogs"  element={<PhotoContainer search={ "dogs" }/>} />
               <Route path="cats"  element={<PhotoContainer search={ "cats" }/>} />
               <Route path="computers"  element={<PhotoContainer search={ "computers" }/>} />
