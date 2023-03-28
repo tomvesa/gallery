@@ -18,26 +18,23 @@ function App() {
     const randomIndex = (arr) =>  Math.floor(Math.random() * arr.length); 
     const { searchDefault } = configQueryParams;
     const [searchValue, setSearchValue] = useState(searchDefault[randomIndex(searchDefault)]);
-    
+
+//set a value to search for    
     const handleSearchValue = ( data ) => {
               setSearchValue( data );
-              console.log({searchValue})
     }
 
-    const location = useLocation();
-    let locationSearch = location.search; 
-  useEffect(()=>{      
+//if on search page, set search value from url search param     
+const location = useLocation();
+  useEffect(()=>{   
+    let locationSearch = location.search;    
     if(location.pathname === '/search/'){      
-        setSearchValue(location.search.substring(1));
+        setSearchValue(locationSearch.substring(1));
     }
-      },[locationSearch])
+      },[location]);
       
     
-    
-  //  call Flickr for photos and pass the photos arra to search value
-
-
-//handle 404 page  
+//handle 404 page  if not 404 render regular page
   if(location.pathname === "/404"){
       return(
         <Routes>
@@ -45,14 +42,11 @@ function App() {
       </Routes>
     )
   } else {
-
       return (
-        <div className='container'>
-    
+        <div className='container'>    
         {/* page elements */}
           <MainNav     onData={handleSearchValue}  />   
-          <SearchForm   onData={handleSearchValue} />
-            
+          <SearchForm   onData={handleSearchValue} />        
           
 
           <Routes>
@@ -67,7 +61,7 @@ function App() {
               <Route path="?:topic" element={<PhotoContainer search={ searchValue }/>} />
             </Route>
 
-            {/* 404 page not found  Route*/}
+            {/* If route not found redirect to 404 page*/}
             <Route path="/*"   element={<Navigate replace   to="/404"/>}  />
 
           </Routes>
