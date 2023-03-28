@@ -18,7 +18,7 @@ const PhotoContainer = ( {search} ) => {
             perPage, 
             outputFormat
                           } = configQueryParams;
-    console.log(apiKey);
+    
 // fetch photos based on the query params and search from the user interaction                          
     useEffect(() => {
         setLoading(true);
