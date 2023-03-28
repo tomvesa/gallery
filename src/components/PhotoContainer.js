@@ -10,7 +10,7 @@ import configQueryParams from './configQueryParams';
 
 const PhotoContainer = ( {search} ) => {
     
-console.log(search);
+//console.log(search);
     const [photos, setPhotos] = useState([]);
     const [loading, setLoading] = useState(true);
     //const { apiKey } = config; 
@@ -30,7 +30,7 @@ console.log(search);
                         })
         .catch(error => console.log("error Fetching data ", error));
 
-    },[search]);  //fetch only when searchValue has changed
+    },[search, baseUrl, perPage, outputFormat]);  //fetch only when searchValue has changed
 
 // render the photo list from feched photos if those are found   
 if(!photos.length){
